@@ -48,10 +48,22 @@ def mp3_from_mp4(input_filename):
     return output_filename
 
 
+def validate_and_remove_pairs(arr):
+    i = 0  # Start from the first element
+    # Use while loop because we'll be modifying the array which affects its length
+    while i < len(arr) - 1:
+        # Check if either condition of order is violated
+        if arr[i][1] > arr[i + 1][0] or arr[i][1] > arr[i + 1][1]:
+            arr.pop(i)  # Remove the current pair
+            # Do not increment i, because we need to check the new pair at this index
+        else:
+            i += 1  # Move to the next pair only if the current pair is in correct order
 
+    return arr  # Return the modified array
 
 import math
 import psutil
+import numpy as np
 #moviepy may need to be installed in IDE terminal
 from moviepy.editor import VideoFileClip, concatenate_videoclips
 
@@ -75,7 +87,25 @@ def transform_array(array_2d,videoinput):
     # Add the final row with the constant 13.14
     transformed_array.append([array_2d[-1][1], end])
 
+    for row in transformed_array:
+        if(row[0] < row[1]):
+            continue
+        if(row[0] > row[1]):
+            row0 = row[0]
+            row1 = row[1]
+            row[0] = row1
+            row[1] = row0
+            print("bad timeStamps: reversed")
+        if(row[0] == row[1]):
+            np.delete(transform_array,row,axis=0)
+            print("bad timeStamp: row deleted")
+
     print(transformed_array)
+    print("TRANSFORMING")
+    transformed_array = validate_and_remove_pairs(transformed_array)
+    print(transformed_array)
+    
+    
     
     return transformed_array
     
