@@ -21,6 +21,19 @@ def clear_intermediary_content():
         os.makedirs(folder_path)
         
         
+def clear_output_content():
+    folder_path = 'OutputContent/'
+    # Check if the folder exists
+    if os.path.exists(folder_path):
+        # Remove all contents of the folder
+        shutil.rmtree(folder_path)
+        # Recreate the folder
+        os.makedirs(folder_path)
+    else:
+        # If the folder doesn't exist, create it
+        os.makedirs(folder_path)
+        
+        
 
 def mp3_from_mp4(input_filename):
     # Clear the intermediary content folder at the start
@@ -37,7 +50,16 @@ def mp3_from_mp4(input_filename):
 
 
 
+import math
+import psutil
+#moviepy may need to be installed in IDE terminal
 from moviepy.editor import VideoFileClip, concatenate_videoclips
+
+cores = psutil.cpu_count(logical=False)
+print("Cores",cores)
+
+allowedCores = math.floor(cores*.8)
+print("Allowed Cores:",allowedCores)
 
 def transform_array(array_2d,videoinput):
     video = VideoFileClip(videoinput)
@@ -58,8 +80,6 @@ def transform_array(array_2d,videoinput):
     return transformed_array
     
 
-
-
 def editVideo(array_2d, videoInput, videoOutPut):
     video = VideoFileClip(videoInput)
 
@@ -79,6 +99,6 @@ def editVideo(array_2d, videoInput, videoOutPut):
     finalClip = concatenate_videoclips(clips)
         
     cliptowrite = finalClip
-    cliptowrite.write_videofile(videoOutPut,ffmpeg_params=['-crf','18', '-aspect', '9:16'])
+    cliptowrite.write_videofile(videoOutPut,ffmpeg_params=['-crf','18', '-aspect', '9:16'],threads=allowedCores)
     #stack overflow with paramiter changes
     #https://stackoverflow.com/questions/75656843/why-does-moviepy-stretch-my-output-after-cutting-and-putting-back-together-a-vid/75657002#75657002
