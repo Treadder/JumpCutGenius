@@ -7,6 +7,7 @@ import jsonParser
 import tkinter as tk
 from tkinter.filedialog import askopenfilename
 from tkinter import ttk
+import os
 
 class GUI:
       
@@ -59,6 +60,13 @@ class GUI:
             myJson = returned_edit_info.json()["result"]["edits"]["edits"]
             
             parsedJson = jsonParser.parse_json_to_2d_time_array(myJson)
+            
+            self.status_label.config(text="Status: Editing video....")
+            
+            output_filename = str("OutputContent/" + os.path.basename(self.filepath))
+            output_filename = os.path.splitext(output_filename)[0] + ".mp4"
+            
+            videoProcessingTools.editVideo(parsedJson, self.filepath, output_filename)
         
             print(parsedJson)
             

@@ -7,3 +7,5 @@ FFmpeg needs to be installed on the host machine, and added to the PATH variable
 This is because we are calling it as a subprocess-- the code expects to be able to run this.
 
 Instructions here: https://windowsloop.com/install-ffmpeg-windows-10/
+
+Also, moviepy must be installed!
