@@ -17,5 +17,6 @@ videoProcessingTools.clear_intermediary_content()
 appGUI = jumpCutGeniusGUI.GUI()
 appGUI.runGUI()
 
+#TODO use moviepie and make this whole thing portable
 
 

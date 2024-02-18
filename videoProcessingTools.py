@@ -17,6 +17,8 @@ def clear_intermediary_content():
     else:
         # If the folder doesn't exist, create it
         os.makedirs(folder_path)
+        
+        
 
 def mp3_from_mp4(input_filename):
     # Clear the intermediary content folder at the start
@@ -29,3 +31,7 @@ def mp3_from_mp4(input_filename):
                     stderr=subprocess.STDOUT)
     
     return output_filename
+
+
+
+#enter grant stuff here

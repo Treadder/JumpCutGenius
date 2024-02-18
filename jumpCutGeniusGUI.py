@@ -57,10 +57,10 @@ class GUI:
             returned_edit_info = cleanVoiceInterface.retrieveEditInformation(edit_id)
 
             myJson = returned_edit_info.json()["result"]["edits"]["edits"]
-            print(myJson)
-            #parsedJson = jsonParser.parse_json_to_2d_time_array(myJson)
-            #print(parsedJson)
             
+            parsedJson = jsonParser.parse_json_to_2d_time_array(myJson)
+        
+            print(parsedJson)
             
     def get_file_path(self):
         return self.filepath
