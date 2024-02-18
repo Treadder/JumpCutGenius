@@ -7,7 +7,6 @@ import jsonParser
 import tkinter as tk
 from tkinter.filedialog import askopenfilename
 from tkinter import ttk
-import threading
 
 class GUI:
       
@@ -39,42 +38,29 @@ class GUI:
     def choose_file(self):
         self.filepath = askopenfilename(filetypes=[("MP4 files", "*.mp4")])
         if self.filepath:
+            
             self.chosen_file_label.config(text=self.filepath)  # Update label with chosen file path
-            # Run the processing in a separate thread
-            threading.Thread(target=self.process_video, args=(self.filepath,)).start()
+            
+            self.status_label.config(text="Status: Processing video to audio...")
+            tempAudioFilename = videoProcessingTools.mp3_from_mp4(self.filepath)
+            
+            self.status_label.config(text="Status: Generating signed URL...")
+            signed_url = cleanVoiceInterface.get_signed_cleanvoice_url(tempAudioFilename)  #get signed url for uploading to
+            
+            self.status_label.config(text="Status: Uploading audio file...")
+            cleanVoiceInterface.upload_file(signed_url, tempAudioFilename)  #upload to url
+            
+            self.status_label.config(text="Status: Editing out the garbage....")
+            edit_id = cleanVoiceInterface.requestEditToAudio(signed_url)
+            
+            self.status_label.config(text="Status: downloading edit instructions....")
+            returned_edit_info = cleanVoiceInterface.retrieveEditInformation(edit_id)
 
-    def process_video(self, filepath):
-        self.update_status("Status: Processing video to audio...")
-        tempAudioFilename = videoProcessingTools.mp3_from_mp4(filepath)
-        
-        self.update_status("Status: Generating signed URL...")
-        signed_url = cleanVoiceInterface.get_signed_cleanvoice_url(tempAudioFilename)
-
-        self.update_status("Status: Uploading audio file...")
-        cleanVoiceInterface.upload_file(signed_url, tempAudioFilename)
-
-        self.update_status("Status: Editing out the garbage...")
-        edit_id = cleanVoiceInterface.requestEditToAudio(signed_url)
-
-        self.update_status("Status: downloading edit instructions...")
-        returned_edit_info = cleanVoiceInterface.retrieveEditInformation(edit_id)
-
-        self.update_status("Status: editing video now...")
-
-        print(returned_edit_info)
-
-    
-        #myJson = returned_edit_info.json()["result"]["edits"]["edits"]
-        #print(myJson)
-        
-        #parsedJson = jsonParser.parse_json_to_2d_time_array(myJson)
-        #print(parsedJson)
-        #print("JSON PRINTED")
-
-    def update_status(self, message):
-        # Ensure the status update is performed in the main thread
-        self.status_label.config(text=message)
-        self.status_label.update_idletasks()
+            myJson = returned_edit_info.json()["result"]["edits"]["edits"]
+            print(myJson)
+            #parsedJson = jsonParser.parse_json_to_2d_time_array(myJson)
+            #print(parsedJson)
+            
             
     def get_file_path(self):
         return self.filepath
