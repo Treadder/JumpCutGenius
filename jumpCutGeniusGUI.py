@@ -1,37 +1,52 @@
-#OURS
+# Ours
 import videoProcessingTools
 import cleanVoiceInterface
 import jsonParser
 
-#NOT OURS
+# Not ours
 import tkinter as tk
 from tkinter.filedialog import askopenfilename
 from tkinter import ttk
 import os
 
 class GUI:
-      
+    
     def __init__(self):
-       self.root = tk.Tk()
-       self.root.title("JumpCut Genius")
-       self.root.geometry("1000x800")
-       self.root.columnconfigure(0, weight=1)
-       self.root.rowconfigure(1, weight=1)
-       self.filepath = None  # Initialize filepath attribute
+        self.root = tk.Tk()
+        self.root.title("JumpCut Genius")
+        self.root.geometry("1000x600")  # Slightly reduced for a more compact look
+        self.root.columnconfigure(0, weight=1)
+        self.root.rowconfigure(1, weight=1)
+        self.filepath = None  # Initialize filepath attribute
+
+        # Set custom colors
+        self.primary_color = "#4a7abc"  # A pleasant blue
+        self.secondary_color = "#ffffff"  # White for contrast
+        self.accent_color = "#f2f2f2"  # Light grey for backgrounds
+
+        # Apply custom theme
+        self.root.tk.call("source", "azure.tcl")
+        self.root.tk.call("set_theme", "light")
 
     def runGUI(self):
         style = ttk.Style()
-        style.configure("TButton", font=("Segoe UI", 10), padding=10)
-        style.configure("TLabel", font=("Segoe UI", 10))
+        style.configure("TButton", font=("Segoe UI", 10), padding=10, background=self.primary_color, foreground=self.secondary_color)
+        style.configure("TLabel", font=("Segoe UI", 10), background=self.accent_color, foreground=self.primary_color)
+        style.configure("TFrame", background=self.accent_color)
 
-        choose_file_button = ttk.Button(self.root, text="Choose MP4 File", command=self.choose_file)
-        choose_file_button.grid(column=0, row=0, pady=20, padx=20)
+        # Main frame for content
+        content_frame = ttk.Frame(self.root)
+        content_frame.grid(column=0, row=0, sticky="nsew", padx=20, pady=20)
+        content_frame.columnconfigure(0, weight=1)
 
-        self.chosen_file_label = ttk.Label(self.root, text="No file selected", wraplength=480)
+        choose_file_button = ttk.Button(content_frame, text="Choose MP4 File", command=self.choose_file)
+        choose_file_button.grid(column=0, row=0, pady=20, padx=20, sticky="ew")
+
+        self.chosen_file_label = ttk.Label(content_frame, text="No file selected", wraplength=480)
         self.chosen_file_label.grid(column=0, row=1, pady=10, padx=20, sticky="ew")
         
         # Status label to communicate with the user
-        self.status_label = ttk.Label(self.root, text="Status: Waiting for action", wraplength=480)
+        self.status_label = ttk.Label(content_frame, text="Status: Waiting for action", wraplength=480)
         self.status_label.grid(column=0, row=2, pady=10, padx=20, sticky="ew")
 
         self.root.mainloop()
