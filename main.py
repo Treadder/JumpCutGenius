@@ -21,9 +21,9 @@ def convert_video_to_audio_ffmpeg(input_filename):
     
     return output_filename
 
-#%%CONVERT VIDEO TO AUDIO NOW
+#%%CONVERT VIDEO TO AUDIO NOW.  NOTE THAT FILENAME MUST NOT HAVE NUMBERS IN IT
 
-upload_filename = convert_video_to_audio_ffmpeg("test.mp4")
+upload_filename = convert_video_to_audio_ffmpeg("testAgain.mp4")
 
 
 #%% GET SIGNED URL TO UPLOAD TO
