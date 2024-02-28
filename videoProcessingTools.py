@@ -1,4 +1,4 @@
-import subprocess
+#import subprocess
 import requests
 import os
 import json
@@ -33,20 +33,21 @@ def clear_output_content():
         # If the folder doesn't exist, create it
         os.makedirs(folder_path)
         
-        
 
 def mp3_from_mp4(input_filename):
-    # Clear the intermediary content folder at the start
-    
+
     output_filename = str("intermediaryContent/" + os.path.basename(input_filename))
     output_filename = os.path.splitext(output_filename)[0] + ".mp3"
-    
-    subprocess.call(["ffmpeg", "-y", "-i", input_filename, output_filename],
-                    stdout=subprocess.DEVNULL,
-                    stderr=subprocess.STDOUT)
-    
+    print("inputfile name:",input_filename)
+    video = VideoFileClip(input_filename)
+    audio = video.audio
+    audio.write_audiofile(output_filename)
+    #audio.close()
+    #video.close()
     return output_filename
 
+#start video edit-------------------------------------------------------------------------
+#-----------------------------------------------------------------------------------------
 
 def validate_and_remove_pairs(arr):
     i = 0  # Start from the first element
@@ -97,7 +98,6 @@ def transform_array(array_2d,videoinput):
             row[1] = row0
             print("bad timeStamps: reversed")
         if(row[0] == row[1]):
-            np.delete(transform_array,row,axis=0)
             print("bad timeStamp: row deleted")
 
     print(transformed_array)

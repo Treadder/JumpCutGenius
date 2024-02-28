@@ -15,7 +15,7 @@ api_key = "7i9QacfrR6CtEKFA8q92BU6BSKKiR7fj"
 
 def get_signed_cleanvoice_url(upload_filename):
     
-    upload_filename = videoProcessingTools.mp3_from_mp4("testAgain.mp4")
+    #upload_filename = videoProcessingTools.mp3_from_mp4("testAgain.mp4")
     url = 'https://api.cleanvoice.ai/v1/upload?filename=' + upload_filename
     headers = {'X-API-Key': api_key}
 

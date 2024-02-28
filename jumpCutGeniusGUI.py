@@ -58,6 +58,8 @@ class GUI:
             self.chosen_file_label.config(text=self.filepath)  # Update label with chosen file path
             
             self.status_label.config(text="Status: Processing video to audio...")
+            print(self.filepath)
+            print(self.chosen_file_label)
             tempAudioFilename = videoProcessingTools.mp3_from_mp4(self.filepath)
             
             self.status_label.config(text="Status: Generating signed URL...")

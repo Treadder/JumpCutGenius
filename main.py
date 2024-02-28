@@ -5,7 +5,6 @@ import videoProcessingTools
 
 
 #Not our own written imports
-import subprocess
 import requests
 import os
 import json
