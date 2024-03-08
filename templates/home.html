@@ -1,0 +1,26 @@
+{% extends "template.html" %} {% block body %}
+
+<h2>Home Page</h2>
+<p>This is the home page!</p>
+
+
+<form action="/account" method="POST">
+    <input type="text" name="name" id="name" placeholder="Your Name" class="form-feild"><br>
+    <button type="submit" class="add-btn">See Account Page</button>
+</form>
+<br>
+
+<!--<form action="/upload" method="post" enctype="multipart/form-data">
+    <label for="file">Select a file to upload:</label>
+    <input type="file" id="file" name="file" accept="image/*, .pdf, .docx">
+    <input type="submit" value="Upload">
+</form>-->
+
+<form enctype="multipart/form-data" action="/upload" method="POST">
+    <input type="file" name="file" />
+    <input type="submit" value="Upload File" />
+</form>
+  
+
+<p>Note how this page can be accesed on both '/' and '/home'. Look into app.py for more information</p>
+{% endblock %}
