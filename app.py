@@ -37,8 +37,8 @@ def upload_file():
         file = request.files['file']
         filename = secure_filename(file.filename)
         # Save the file to a desired location (e.g., 'uploads' folder)
-        file.save(f'uploads/{filename}')
-        filepath =(f'uploads/{filename}')
+        file.save(f'./uploads/{filename}')
+        filepath =(f'./uploads/{filename}')
         print(filepath)
         videoProcessingTools.clear_intermediary_content()
         videoProcessingTools.clear_output_content()
