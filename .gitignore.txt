@@ -1,0 +1,3 @@
+intermediaryContent/
+OutputContent/
+uploads/
