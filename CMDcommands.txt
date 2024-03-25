@@ -1,0 +1,7 @@
+
+# this creates the docker image the " . " just signifies you have to be in the current file directory "python-docker" is where you adjust the docker name if you want to change it.
+docker build --tag python-docker .
+# you can check wether you created a docker images by writing 
+docker images
+# Then you can run the docker image to an address 
+docker run -d -p 5000:5000 python-docker
